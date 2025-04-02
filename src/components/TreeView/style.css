@@ -1,0 +1,26 @@
+.treeUl, .treeLi {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* .treeUl {
+    position: absolute;
+    content: "";
+    width: 1.5rem;
+    height: 1rem;
+    border-left: 2px solid red;
+}
+
+.treeUl.nested::before {
+    position:relative;
+}
+
+.treeUl.nested::before {
+    position:absolute;
+    content: "";
+    left: 7.2%;
+    width: 1.5rem;
+    height: 100%;
+    border-left: 2px solid;
+} */
