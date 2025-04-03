@@ -19,7 +19,11 @@ interface TreeViewProps3 {
   level?: number;
 }
 
-const TreeView3: React.FC<TreeViewProps3> = ({ routes, parent = "", level = 0 }) => {
+const TreeView3: React.FC<TreeViewProps3> = ({
+  routes,
+  parent = "",
+  level = 0,
+}) => {
   const { open, handleClick } = useTreeViewLogic();
   const navigate = useNavigate();
   const hasParent = Boolean(parent);
@@ -32,27 +36,41 @@ const TreeView3: React.FC<TreeViewProps3> = ({ routes, parent = "", level = 0 })
           .map(({ subPath, path, title, icon: Icon }, index, array) => {
             const fullPath = `${parent}${path}`;
             const last = index === array.length - 1;
-            const first = index === 0;
-
-            console.log(fullPath);
-            if (hasParent) console.log(title, hasParent, fullPath, level);
 
             return (
               <Fragment key={path}>
-                <li className="treeLi" style={{ position: "relative" }}>
+                <li
+                  className="treeLi"
+                  style={{
+                    position: "relative",
+                  }}
+                >
                   <ListItemButton
-                    onClick={() => (subPath ? handleClick(title as string) : navigate(fullPath))}
-                    sx={{ ml: hasParent && level === 0 ? 4 : 2 }}
+                    onClick={() =>
+                      subPath
+                        ? handleClick(title as string)
+                        : navigate(fullPath)
+                    }
+                    sx={{
+                      ml: hasParent && level === 0 ? 4 : 2,
+
+                      borderLeft:
+                        level > 0 && !last ? "3px solid currentColor" : "none",
+                    }}
                   >
                     {hasParent && (
                       <Box
                         sx={{
-                          borderLeft: "2px solid green",
-                          borderRadius: last ? "0 0 0 50%" : "none",
-                          borderBottom: "2px solid green",
-                          width: "10px",
-                          height: first ? "50%" : "100%",
-                          transform: "translate(-160%, -50%)",
+                          borderLeft: "3px solid currentColor",
+                          borderBottomLeftRadius: "10px",
+
+                          borderBottom: "3px solid currentColor",
+                          width: "16px",
+                          height: "50%",
+
+                          transform: last
+                            ? "translate(-100%, -50%)"
+                            : "translate(-116%, -50%)",
                           position: "absolute",
                         }}
                       />
@@ -63,12 +81,32 @@ const TreeView3: React.FC<TreeViewProps3> = ({ routes, parent = "", level = 0 })
                       </ListItemIcon>
                     )}
                     <ListItemText primary={title} />
-                    {subPath && (open[title as never] ? <ExpandLess /> : <ExpandMore />)}
+                    {subPath &&
+                      (open[title as never] ? <ExpandLess /> : <ExpandMore />)}
                   </ListItemButton>
                   {subPath && (
-                    <Collapse in={open[title as never]} timeout="auto" unmountOnExit sx={{ px: 2, paddingRight: 0 }}>
-                      <TreeView3 routes={subPath} parent={`${parent}${path}/`} level={level + 1} />
-                    </Collapse>
+                    <Fragment>
+                      <Collapse
+                        in={open[title as never]}
+                        timeout="auto"
+                        unmountOnExit
+                        sx={{
+                          px: 1.3,
+                          paddingRight: 0,
+                          ml: hasParent && level === 0 ? 4 : 2,
+                          borderLeft:
+                            level > 0 && !last
+                              ? "3px solid currentColor"
+                              : "none",
+                        }}
+                      >
+                        <TreeView3
+                          routes={subPath}
+                          parent={`${parent}${path}/`}
+                          level={level + 1}
+                        />
+                      </Collapse>
+                    </Fragment>
                   )}
                 </li>
               </Fragment>
