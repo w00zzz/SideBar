@@ -1,5 +1,4 @@
 import { IPWARoutes } from "faster-router";
-import "./style.css";
 import {
   Box,
   Collapse,
@@ -30,7 +29,14 @@ const TreeView3: React.FC<TreeViewProps3> = ({
 
   return (
     <Stack component="nav" sx={{ color: "text.secondary", padding: 0 }}>
-      <ul className="treeUl" style={{ position: "relative" }}>
+      <ul
+        style={{
+          position: "relative",
+          listStyle: "none",
+          margin: 0,
+          padding: 0,
+        }}
+      >
         {Object.values(routes)
           .filter(({ title }) => title)
           .map(({ subPath, path, title, icon: Icon }, index, array) => {
@@ -40,9 +46,11 @@ const TreeView3: React.FC<TreeViewProps3> = ({
             return (
               <Fragment key={path}>
                 <li
-                  className="treeLi"
                   style={{
                     position: "relative",
+                    listStyle: "none",
+                    margin: 0,
+                    padding: 0,
                   }}
                 >
                   <ListItemButton
