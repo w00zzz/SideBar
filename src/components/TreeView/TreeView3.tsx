@@ -33,13 +33,13 @@ const TreeView3: React.FC<TreeViewProps> = ({ routes, parent = "", level = 0 }) 
 
             return (
               <li key={path} style={{ position: "relative" }}>
-                <ListItemButton onClick={handleItemClick} sx={{ ml: marginLeft, borderLeft: level > 0 && !last ? "3px solid currentColor" : "none" }}>
+                <ListItemButton onClick={handleItemClick} sx={{ ml: marginLeft, borderLeft: level > 0 && !last ? "3px solid gray" : "none" }}>
                   {hasParent && (
                     <Box
                       sx={{
-                        borderLeft: "3px solid currentColor",
+                        borderLeft: "3px solid gray",
                         borderBottomLeftRadius: "10px",
-                        borderBottom: "3px solid currentColor",
+                        borderBottom: "3px solid gray",
                         width: "16px",
                         height: "50%",
                         transform: last ? "translate(-100%, -50%)" : "translate(-116%, -50%)",
@@ -60,7 +60,7 @@ const TreeView3: React.FC<TreeViewProps> = ({ routes, parent = "", level = 0 }) 
                     in={isOpen}
                     timeout="auto"
                     unmountOnExit
-                    sx={{ px: 1.3, pr: 0, ml: marginLeft, borderLeft: level > 0 && !last ? "3px solid currentColor" : "none" }}
+                    sx={{ px: 1.3, pr: 0, ml: marginLeft, borderLeft: level > 0 && !last ? "3px solid gray" : "none" }}
                   >
                     <TreeView3 routes={subPath} parent={`${fullPath}/`} level={level + 1} />
                   </Collapse>
