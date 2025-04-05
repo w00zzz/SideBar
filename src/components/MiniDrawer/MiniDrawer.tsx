@@ -1,63 +1,98 @@
-import TreeView3 from "@/components/TreeView3"; // Importa tu TreeView
-import routes from "@/data/routes"; // Asegúrate de tener las rutas definidas
+import React, { useCallback } from "react";
+import {
+  Box,
+  Drawer,
+  IconButton,
+  Backdrop,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import { MiniDrawerProps } from "@/interfaces/components/MiniDrawer/MiniDrawer.types";
+import TreeView from "@/components/TreeView/TreeView"; // Importamos el TreeView
 
-export default function MiniDrawer() {
+const MiniDrawer: React.FC<MiniDrawerProps> = ({
+  open,
+  onOpen,
+  onClose,
+  routes,
+  logo,
+  variant = "permanent",
+  width = 320,
+  collapsedWidth = 88,
+  sx,
+}) => {
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const currentVariant = isMobile ? "temporary" : variant;
+  const currentWidth = open ? width : collapsedWidth;
 
-  const handleDrawerOpen = () => setOpen(true);
-  const handleDrawerClose = () => setOpen(false);
+  const handleLogoClick = useCallback(() => {
+    if (logo.onClick) {
+      logo.onClick();
+    } else {
+      // Toggling the drawer state on click
+      if (open) {
+        onClose();
+      } else {
+        onOpen();
+      }
+    }
+  }, [open, onOpen, onClose, logo.onClick]);
 
   return (
-    <Box sx={{ display: "flex" }}>
-      <CssBaseline />
-      <AppBar position="fixed" open={open}>
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{ marginRight: 5, ...(open && { display: "none" }) }}
+    <>
+      <Drawer
+        variant={currentVariant}
+        open={currentVariant === "temporary" ? open : true}
+        onClose={onClose}
+        sx={{
+          width: currentWidth,
+          flexShrink: 0,
+          "& .MuiDrawer-paper": {
+            width: currentWidth,
+            transition: theme.transitions.create(["width", "margin"], {
+              duration: 200,
+            }),
+            ...sx,
+          },
+        }}
+      >
+        <Box sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
+          <Box
+            sx={{
+              height: "64px",
+              display: "flex",
+              alignItems: "center",
+              padding: "0 16px",
+            }}
+            onClick={handleLogoClick}
           >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap>
-            Mini variant drawer
-          </Typography>
-        </Toolbar>
-      </AppBar>
-
-      <Drawer variant="permanent" open={open}>
-        <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === "rtl" ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-          </IconButton>
-        </DrawerHeader>
-        <Divider />
-
-        {/* ✅ Aquí integramos TreeView3 */}
-        <TreeView3
-          routes={routes}
-          parent=""
-          level={0}
+            {open ? logo.full : logo.icon}
+          </Box>
+          {!isMobile && variant === "permanent" && open && (
+            <IconButton
+              onClick={onClose}
+              sx={{ position: "absolute", top: 16, right: 16 }}
+            >
+              <ChevronLeftIcon />
+            </IconButton>
+          )}
+          <TreeView routes={routes} />
+        </Box>
+      </Drawer>
+      {currentVariant === "temporary" && (
+        <Backdrop
+          open={open}
+          onClick={onClose}
           sx={{
-            "& .MuiListItemText-root": { opacity: open ? 1 : 0 },
-            "& .MuiListItemButton-root": {
-              justifyContent: open ? "initial" : "center",
-            },
-            "& .MuiListItemIcon-root": {
-              justifyContent: "center",
-              mr: open ? 2 : "auto",
-            },
+            zIndex: theme.zIndex.drawer - 1,
+            backgroundColor: "rgb(255, 255, 255)",
           }}
         />
-      </Drawer>
-
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        <DrawerHeader />
-        <Typography>Contenido principal aquí...</Typography>
-      </Box>
-    </Box>
+      )}
+    </>
   );
-}
+};
+
+export default MiniDrawer;

@@ -1,9 +1,5 @@
-// import DrawerMenu from "./components/DrawerMenu";
 import "./global.css";
 import {  IPWARoutes, PwaRoutes } from "faster-router";
-// import TreeView from "./components/TreeView";
-// import TreeView from "./components/TreeView/TreeView";
-
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
@@ -15,10 +11,7 @@ import WcIcon from "@mui/icons-material/Wc";
 import SafetyCheckIcon from "@mui/icons-material/SafetyCheck";
 import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
 import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
-// import NewTreeView from "./components/TreeView/TreeView2";
-// import TreeView from "./components/TreeView/TreeView";
-import TreeView3 from "./components/TreeView/TreeView3";
-
+import MiniDrawer from "./components/MiniDrawer/MiniDrawer";
 
 export enum Pages {
   Test,
@@ -338,11 +331,16 @@ function App() {
       DashboardLayout={({ children }: any) => (
         <div>
           <h1>Template</h1>
-          {/* <DrawerMenu routes={myRoutes} /> */}
-          {/* <MyTreeView routes={myRoutes}></MyTreeView> */}
-          {/* <TreeView routes={myRoutes2}></TreeView> */}
-          {/* <NewTreeView routes={myRoutes2}/> */}
-          <TreeView3 routes={myRoutes2} />
+          <MiniDrawer
+            open={true}
+            onOpen={() => {}}
+            onClose={() => {}}
+            routes={myRoutes2}
+            logo={{
+              full: <h1>Full Logo</h1>,
+              icon: <h1>Icon Logo</h1>,
+            }}
+          />
           <div style={{ backgroundColor: "red" }}>{children}</div>
         </div>
       )}
