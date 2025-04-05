@@ -11,7 +11,8 @@ import WcIcon from "@mui/icons-material/Wc";
 import SafetyCheckIcon from "@mui/icons-material/SafetyCheck";
 import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
 import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
-import MiniDrawer from "./components/MiniDrawer/MiniDrawer";
+// import MiniDrawer from "./components/MiniDrawer/MiniDrawer";
+import Drawer from "./components/MiniDrawer/Drawer";
 
 export enum Pages {
   Test,
@@ -329,9 +330,9 @@ function App() {
       routes={myRoutes2}
       CallBackUrlController={() => <h1>Hola mundo!</h1>}
       DashboardLayout={({ children }: any) => (
-        <div>
+        <div style={{ display: "flex" }}>
           <h1>Template</h1>
-          <MiniDrawer
+          {/* <MiniDrawer
             open={true}
             onOpen={() => {}}
             onClose={() => {}}
@@ -340,7 +341,8 @@ function App() {
               full: <h1>Full Logo</h1>,
               icon: <h1>Icon Logo</h1>,
             }}
-          />
+          /> */}
+          <Drawer></Drawer>
           <div style={{ backgroundColor: "red" }}>{children}</div>
         </div>
       )}

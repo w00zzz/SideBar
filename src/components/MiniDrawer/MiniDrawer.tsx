@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import {
   Box,
   Drawer,
@@ -26,6 +26,20 @@ const MiniDrawer: React.FC<MiniDrawerProps> = ({
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const currentVariant = isMobile ? "temporary" : variant;
   const currentWidth = open ? width : collapsedWidth;
+
+  // const handleLogoClick = useCallback(() => {
+  //   if (logo.onClick) {
+  //     logo.onClick();
+  //   } else {
+  //     // Toggling the drawer state on click
+  //     if (open) {
+  //       onClose();
+  //     } else {
+  //       onOpen();
+  //     }
+  //   }
+  // }, [open, onOpen, onClose, logo.onClick]);
+  const [open, setOpen] = useState(false);
 
   const handleLogoClick = useCallback(() => {
     if (logo.onClick) {

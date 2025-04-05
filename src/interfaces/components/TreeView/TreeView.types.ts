@@ -4,6 +4,7 @@ interface TreeViewProps {
   routes: IPWARoutes;
   parent?: string;
   level?: number;
+  isCollapsed?: boolean;
 }
 
 export default TreeViewProps

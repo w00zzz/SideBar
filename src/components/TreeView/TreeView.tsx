@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import TreeViewProps from "@/interfaces/components/TreeView/TreeView.types";
 
-const TreeView: React.FC<TreeViewProps> = ({ routes, parent = "", level = 0 }) => {
+const TreeView: React.FC<TreeViewProps> = ({ routes, parent = "", level = 0, isCollapsed = false }) => {
   const { open, handleClick } = useTreeViewLogic();
   const navigate = useNavigate();
   const hasParent = Boolean(parent);
@@ -33,7 +33,7 @@ const TreeView: React.FC<TreeViewProps> = ({ routes, parent = "", level = 0 }) =
 
             return (
               <li key={path} style={{ position: "relative" }}>
-                <ListItemButton onClick={handleItemClick} sx={{  ml: marginLeft, borderLeft: level > 0 && !last ? "3px solid gray" : "none" }}>
+                <ListItemButton onClick={handleItemClick} sx={{  ml: marginLeft, borderLeft: level > 0 && !last ? "3px solid gray" : "none"}}>
                   {hasParent && (
                     <Box
                       sx={{
@@ -52,7 +52,7 @@ const TreeView: React.FC<TreeViewProps> = ({ routes, parent = "", level = 0 }) =
                       <Icon />
                     </ListItemIcon>
                   )}
-                  <ListItemText primary={title} />
+                  {!isCollapsed && <ListItemText primary={title} />}
                   {subPath && (isOpen ? <ExpandLess /> : <ExpandMore />)}
                 </ListItemButton>
                 {subPath && (
@@ -62,7 +62,7 @@ const TreeView: React.FC<TreeViewProps> = ({ routes, parent = "", level = 0 }) =
                     unmountOnExit
                     sx={{ px: 1.3, pr: 0,  ml: marginLeft, borderLeft: level > 0 && !last ? "3px solid gray" : "none" }}
                   >
-                    <TreeView routes={subPath} parent={`${fullPath}/`} level={level + 1} />
+                    <TreeView routes={subPath} parent={`${fullPath}/`} level={level + 1} isCollapsed={isCollapsed} />
                   </Collapse>
                 )}
               </li>
