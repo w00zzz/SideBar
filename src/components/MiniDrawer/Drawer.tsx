@@ -4,13 +4,11 @@ import { ChevronLeft, ChevronRight } from "@mui/icons-material";
 import TreeView from "../TreeView/TreeView";
 import { IPWARoutes } from "faster-router";
 
-
-interface DrawerProps{
-    routes: IPWARoutes;
+interface DrawerProps {
+  routes: IPWARoutes;
 }
 
-
-const Drawer: React.FC<DrawerProps> = ({routes}) => {
+const Drawer: React.FC<DrawerProps> = ({ routes }) => {
   const [isExpanded, setIsExpanded] = useState(true);
   const drawerWidth = isExpanded ? 380 : 88;
 
@@ -47,11 +45,20 @@ const Drawer: React.FC<DrawerProps> = ({routes}) => {
             src="/path-to-your-logo.png"
             sx={{
               height: "32px",
-              display: isExpanded ? "block" : "none"
+              display: isExpanded ? "block" : "none",
             }}
           />
         </Box>
-        <Box sx={{ overflow: "hidden", flex: 1 }}>
+        <Box
+          sx={{
+            overflowY: "auto",
+            flex: 1,
+            maxHeight: "calc(100vh - 64px)",
+            "&::-webkit-scrollbar": {
+              width: "1px", 
+            },
+          }}
+        >
           <TreeView routes={routes} isCollapsed={!isExpanded} />
         </Box>
         <IconButton
@@ -72,8 +79,8 @@ const Drawer: React.FC<DrawerProps> = ({routes}) => {
             zIndex: 1300,
             "&:hover": {
               backgroundColor: "#f5f5f5",
-              boxShadow: "0px 4px 8px rgba(0,0,0,0.1)"
-            }
+              boxShadow: "0px 4px 8px rgba(0,0,0,0.1)",
+            },
           }}
         >
           {isExpanded ? <ChevronLeft /> : <ChevronRight />}
