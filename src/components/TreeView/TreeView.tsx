@@ -18,7 +18,7 @@ const TreeView: React.FC<TreeViewProps> = ({ routes, parent = "", level = 0, isC
   const marginLeft = hasParent && level === 0 ? 4 : 2;
 
   return (
-    <Stack component="nav" sx={{ color: "text.secondary", p: 2 }}>
+    <Stack component="nav" sx={{ color: "text.secondary", p: 2, pr: 0 }}>
       <ul style={{ position: "relative", listStyle: "none", margin: 0, padding: 0 }}>
         {Object.values(routes)
           .filter(({ title }) => title)
