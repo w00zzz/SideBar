@@ -18,7 +18,7 @@ const TreeView: React.FC<TreeViewProps> = ({ routes, parent = "", level = 0, isC
   const marginLeft = hasParent && level === 0 ? 4 : 2;
 
   return (
-    <Stack component="nav" sx={{ color: "text.secondary", p: 0 }}>
+    <Stack component="nav" sx={{ color: "text.secondary", p: 2 }}>
       <ul style={{ position: "relative", listStyle: "none", margin: 0, padding: 0 }}>
         {Object.values(routes)
           .filter(({ title }) => title)
@@ -33,16 +33,41 @@ const TreeView: React.FC<TreeViewProps> = ({ routes, parent = "", level = 0, isC
 
             return (
               <li key={path} style={{ position: "relative" }}>
-                <ListItemButton onClick={handleItemClick} sx={{  ml: marginLeft, borderLeft: level > 0 && !last ? "2px solid gray" : "none"}}>
+                {level > 0 && !last && (
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      left: `${marginLeft * 6}px`,
+                      top: 0,
+                      bottom: 0,
+                      borderLeft: "2px solid  gray",
+                      zIndex: 0
+                    }}
+                  />
+                )}
+                <ListItemButton 
+                  onClick={handleItemClick} 
+                  sx={{ 
+                    ml: marginLeft, 
+                    position: "relative", 
+                    zIndex: 1,
+                    backgroundColor: "#fff",
+                    borderRadius: "8px",
+                    mb: 0.5,
+                    py: 0.5,
+                    "&:hover": {
+                      backgroundColor: "#f8f9fa"
+                    },
+                  }}>
                   {hasParent && (
-                    <Box
+                    <Box // Box curvo
                       sx={{
                         borderLeft: "2px solid gray",
                         borderBottomLeftRadius: "10px",
                         borderBottom: "2px solid gray",
                         width: "16px",
-                        height: "50%",
-                        transform: last ? "translate(-100%, -50%)" : "translate(-116%, -50%)",
+                        height: "90%",
+                        transform: last ? "translate(-125%, -50%)" : "translate(-124%, -50%)",
                         position: "absolute",
                       }}
                     />
@@ -52,7 +77,17 @@ const TreeView: React.FC<TreeViewProps> = ({ routes, parent = "", level = 0, isC
                       <Icon />
                     </ListItemIcon>
                   )}
-                  {!isCollapsed && <ListItemText primary={title} />}
+                  {!isCollapsed && <ListItemText 
+                    primary={title} 
+                    sx={{ 
+                      m: 0,
+                      "& .MuiTypography-root": {
+                        fontSize: "0.875rem",
+                        color: "#637381",
+                        fontWeight: 500
+                      }
+                    }} 
+                  />}
                   {subPath && (isOpen ? <ExpandLess /> : <ExpandMore />)}
                 </ListItemButton>
                 {subPath && (
@@ -60,7 +95,18 @@ const TreeView: React.FC<TreeViewProps> = ({ routes, parent = "", level = 0, isC
                     in={isOpen}
                     timeout="auto"
                     unmountOnExit
-                    sx={{ px: 1.3, pr: 0,  ml: marginLeft, borderLeft: level > 0 && !last ? "2px solid gray" : "none" }}
+                    sx={{ 
+                      p: 0,
+                      ml: marginLeft, 
+                      position: "relative",
+                      "& .MuiListItemButton-root": {
+                        backgroundColor: "transparent",
+                        py: 0.5,
+                        "&:hover": {
+                          backgroundColor: "#f8f9fa"
+                        }
+                      }
+                    }}
                   >
                     <TreeView routes={subPath} parent={`${fullPath}/`} level={level + 1} isCollapsed={isCollapsed} />
                   </Collapse>
