@@ -332,17 +332,7 @@ function App() {
       DashboardLayout={({ children }: any) => (
         <div style={{ display: "flex" }}>
           <h1>Template</h1>
-          {/* <MiniDrawer
-            open={true}
-            onOpen={() => {}}
-            onClose={() => {}}
-            routes={myRoutes2}
-            logo={{
-              full: <h1>Full Logo</h1>,
-              icon: <h1>Icon Logo</h1>,
-            }}
-          /> */}
-          <Drawer></Drawer>
+          <Drawer routes={myRoutes2}></Drawer>
           <div style={{ backgroundColor: "red" }}>{children}</div>
         </div>
       )}

@@ -2,61 +2,17 @@ import { useState } from "react";
 import { Drawer as MuiDrawer, Box, IconButton } from "@mui/material";
 import { ChevronLeft, ChevronRight } from "@mui/icons-material";
 import TreeView from "../TreeView/TreeView";
-import { 
-  Apps as AppIcon,
-  ShoppingCart as EcommerceIcon,
-  Analytics as AnalyticsIcon,
-  AccountBalance as BankingIcon,
-  CalendarToday as BookingIcon,
-  Description as FileIcon,
-  School as CourseIcon,
-  Person as UserIcon,
-  Inventory as ProductIcon,
-  ShoppingBasket as OrderIcon,
-  Receipt as InvoiceIcon,
-  Article as BlogIcon,
-  Work as JobIcon,
-  Tour as TourIcon,
-  Folder as FileManagerIcon,
-  Mail as MailIcon,
-  Chat as ChatIcon
-} from "@mui/icons-material";
+import { IPWARoutes } from "faster-router";
 
-const routes = {
-  overview: {
-    title: "OVERVIEW",
-    path: "",
-    subPath: {
-      app: { title: "App", path: "/app", icon: AppIcon },
-      ecommerce: { title: "Ecommerce", path: "/ecommerce", icon: EcommerceIcon },
-      analytics: { title: "Analytics", path: "/analytics", icon: AnalyticsIcon },
-      banking: { title: "Banking", path: "/banking", icon: BankingIcon },
-      booking: { title: "Booking", path: "/booking", icon: BookingIcon },
-      file: { title: "File", path: "/file", icon: FileIcon },
-      course: { title: "Course", path: "/course", icon: CourseIcon },
-    }
-  },
-  management: {
-    title: "MANAGEMENT",
-    path: "",
-    subPath: {
-      user: { title: "User", path: "/user", icon: UserIcon },
-      product: { title: "Product", path: "/product", icon: ProductIcon },
-      order: { title: "Order", path: "/order", icon: OrderIcon },
-      invoice: { title: "Invoice", path: "/invoice", icon: InvoiceIcon },
-      blog: { title: "Blog", path: "/blog", icon: BlogIcon },
-      job: { title: "Job", path: "/job", icon: JobIcon },
-      tour: { title: "Tour", path: "/tour", icon: TourIcon },
-      fileManager: { title: "File manager", path: "/file-manager", icon: FileManagerIcon },
-      mail: { title: "Mail", path: "/mail", icon: MailIcon, badge: "+32" },
-      chat: { title: "Chat", path: "/chat", icon: ChatIcon }
-    }
-  }
-};
 
-const Drawer = () => {
+interface DrawerProps{
+    routes: IPWARoutes;
+}
+
+
+const Drawer: React.FC<DrawerProps> = ({routes}) => {
   const [isExpanded, setIsExpanded] = useState(true);
-  const drawerWidth = isExpanded ? 280 : 88;
+  const drawerWidth = isExpanded ? 380 : 88;
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -70,7 +26,7 @@ const Drawer = () => {
             overflowX: "hidden",
             backgroundColor: "#fff",
             transition: "width 0.3s ease-in-out",
-            borderRight: "1px dashed rgba(145, 158, 171, 0.2)",
+            borderRight: "1px solid rgba(145, 158, 171, 0.2)",
           },
           position: "relative",
         }}
@@ -83,7 +39,7 @@ const Drawer = () => {
             alignItems: "center",
             justifyContent: isExpanded ? "space-between" : "center",
             padding: isExpanded ? "0 24px" : "0",
-            borderBottom: "1px dashed rgba(145, 158, 171, 0.2)",
+            borderBottom: "1px solid rgba(145, 158, 171, 0.2)",
           }}
         >
           <Box
@@ -103,7 +59,7 @@ const Drawer = () => {
           sx={{
             position: "fixed",
             top: "20px",
-            left: isExpanded ? "260px" : "68px",
+            left: isExpanded ? "368px" : "75px",
             width: "24px",
             height: "24px",
             padding: 0,
