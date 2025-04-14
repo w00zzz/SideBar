@@ -1,15 +1,14 @@
 import { Box } from "@mui/material";
-import Popover from "../Popover";
+import Popover from "./Popover/Popover";
 import TreeView from "../TreeView";
+import { IPWARoutes } from "faster-router";
 
-// Definimos la interfaz para las props del componente
-// interface SidebarContentProps {
-//   isExpanded: boolean; // Controla si el sidebar está expandido o colapsado
-//   data: Record<string, any>; // Objeto genérico que se pasará a los componentes hijos
-// }
+interface SidebarContentProps {
+  isExpanded: boolean;
+  routes: IPWARoutes;
+}
 
-// const SidebarContent = ({ isExpanded, data }: SidebarContentProps) => {
-const SidebarContent = ({ isExpanded }: { isExpanded: boolean }) => {
+const SidebarContent = ({ isExpanded, routes }: SidebarContentProps) => {
   // Contenido dinámico basado en `isExpanded`
   const content = isExpanded ? (
     <>
@@ -22,7 +21,7 @@ const SidebarContent = ({ isExpanded }: { isExpanded: boolean }) => {
     <>
       {/* Pasamos el objeto `data` al componente Popover */}
       {/* <Popover data={data} /> */}
-      <Popover />
+      <Popover routes={routes} />
     </>
   );
 

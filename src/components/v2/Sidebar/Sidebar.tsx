@@ -3,8 +3,13 @@ import { useState } from "react";
 import SidebarHeader from "./SidebarHeader";
 import SidebarToggle from "./SidebarToggle";
 import SidebarContent from "./SidebarContent";
+import { IPWARoutes } from "faster-router";
 
-const SideBar = () => {
+interface SidebarProps {
+  routes: IPWARoutes
+}
+
+const SideBar = ({routes}: SidebarProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const drawerWidth = isExpanded ? 300 : 87;
 
@@ -26,7 +31,7 @@ const SideBar = () => {
         }}
       >
         <SidebarHeader isExpanded={isExpanded} />
-        <SidebarContent isExpanded={isExpanded} />
+        <SidebarContent isExpanded={isExpanded} routes={routes} />
         <SidebarToggle
           isExpanded={isExpanded}
           onClick={() => setIsExpanded(!isExpanded)}
