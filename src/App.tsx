@@ -11,8 +11,7 @@ import WcIcon from "@mui/icons-material/Wc";
 import SafetyCheckIcon from "@mui/icons-material/SafetyCheck";
 import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
 import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
-// import MiniDrawer from "./components/MiniDrawer/MiniDrawer";
-import Drawer from "./components/MiniDrawer/Drawer";
+import Sidebar from "./components/v2/Sidebar/Sidebar";
 
 export enum Pages {
   Test,
@@ -332,8 +331,10 @@ function App() {
       DashboardLayout={({ children }: any) => (
         <div style={{ display: "flex" }}>
           <h1>Template</h1>
-          <Drawer routes={myRoutes2}></Drawer>
+          {/* <Drawer routes={myRoutes2}></Drawer> */}
+          {/* <TreeViewPopover/> */}
           <div style={{ backgroundColor: "red" }}>{children}</div>
+          <Sidebar/>
         </div>
       )}
       LandingPage={() => <h1>Landing!</h1>}

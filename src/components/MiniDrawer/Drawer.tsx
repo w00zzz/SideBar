@@ -23,7 +23,7 @@ const Drawer: React.FC<DrawerProps> = ({ routes }) => {
             width: drawerWidth,
             overflowX: "hidden",
             backgroundColor: "#fff",
-            transition: "width 0.3s ease-in-out",
+            transition: "width 0.4s ease-in-out",
             borderRight: "1px solid rgba(145, 158, 171, 0.2)",
           },
           position: "relative",
