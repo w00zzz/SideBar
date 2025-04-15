@@ -1,9 +1,11 @@
 import { FC } from 'react';
 import { Box, ListItemButton } from "@mui/material";
+import { IPWARoutes } from 'faster-router';
 
 interface PopoverItemProps {
   handleClick: () => void;
   icon: FC<any>;
+  routes?: IPWARoutes;
 }
 
 const PopoverItem = ({ handleClick, icon: Icon }: PopoverItemProps) => {
