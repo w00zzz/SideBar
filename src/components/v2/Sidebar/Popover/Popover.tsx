@@ -15,19 +15,13 @@ const Popover = ({routes}: PopoverProps) => {
           return Boolean(route.title && route.icon);
         })
         .map(([key, route]) => {
-          if (route.subPath) {
-            <PopoverItem
-              key={key}
-              handleClick={() => console.log(`click en ${route.title}`)}
-              icon={route.icon}
-              routes={routes}
-            />
-          }
           return (
             <PopoverItem
               key={key}
               handleClick={() => console.log(`click en ${route.title}`)}
               icon={route.icon}
+              routes={route.subPath ? route : undefined}
+              title={route.title}
             />
           );
         })
