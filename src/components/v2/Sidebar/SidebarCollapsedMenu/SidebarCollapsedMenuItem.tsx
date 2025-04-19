@@ -7,9 +7,10 @@ interface SubMenuProps {
   routes: any;
   onItemClick: () => void;
   onClose: () => void;
+  parentTitle?: string;
 }
 
-const SubMenu: FC<SubMenuProps> = ({ routes, onItemClick, onClose }) => {
+const SubMenu: FC<SubMenuProps> = ({ routes, onItemClick, onClose, parentTitle }) => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [activeSubPath, setActiveSubPath] = useState<string | null>(null);
 
@@ -26,6 +27,25 @@ const SubMenu: FC<SubMenuProps> = ({ routes, onItemClick, onClose }) => {
 
   return (
     <Box sx={{ p: 1, display: 'flex', flexDirection: 'column', gap: 1 }}>
+      {/* Mostrar el título del padre como encabezado si está presente */}
+      {parentTitle && (
+        <>
+          <ListSubheader
+            sx={{
+              backgroundColor: 'transparent',
+              color: '#9DA4AE',
+              fontWeight: 500,
+              fontSize: '14px',
+              padding: '8px 16px',
+              lineHeight: '24px',
+              userSelect: 'none',
+            }}
+          >
+            {parentTitle}
+          </ListSubheader>
+          <Divider sx={{ my: 0.5 }} />
+        </>
+      )}
       {Object.entries(routes).map(([key, route]: [string, any]) => (
         route.title && (
           <Box key={key} sx={{ position: 'relative' }}>
@@ -94,6 +114,7 @@ const SubMenu: FC<SubMenuProps> = ({ routes, onItemClick, onClose }) => {
                   routes={route.subPath}
                   onItemClick={onItemClick}
                   onClose={onClose}
+                  parentTitle={route.title}
                 />
               </Popover>
             )}
