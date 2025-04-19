@@ -10,6 +10,7 @@ export interface SubMenuProps {
   onItemClick: () => void;
   onClose: () => void;
   parentTitle?: string;
+  level?: number;
 }
 
 export interface PopoverItemProps {

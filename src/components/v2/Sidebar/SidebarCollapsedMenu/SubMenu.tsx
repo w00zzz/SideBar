@@ -14,6 +14,7 @@ const SubMenu: FC<SubMenuProps> = ({
   onItemClick,
   onClose,
   parentTitle,
+  level = 0,
 }) => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [activeSubPath, setActiveSubPath] = useState<string | null>(null);
@@ -30,10 +31,11 @@ const SubMenu: FC<SubMenuProps> = ({
   };
 
   const handleSubMenuClose = () => {
+    // Only close this level's submenu, not parent menus
     timeoutRef.current = setTimeout(() => {
       setAnchorEl(null);
       setActiveSubPath(null);
-    }, 1); // Small delay to prevent menu from closing immediately when moving to submenu
+    }, 100); // Small delay to prevent menu from closing immediately when moving to submenu
   };
 
   return (
@@ -139,6 +141,7 @@ const SubMenu: FC<SubMenuProps> = ({
                     onItemClick={onItemClick}
                     onClose={onClose}
                     parentTitle={route.title}
+                    level={level + 1}
                   />
                 </Popover>
               )}

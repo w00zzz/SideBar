@@ -32,9 +32,10 @@ const SidebarCollapsedMenuItem = ({
   };
 
   const handlePopoverClose = () => {
+    // For the main menu item, we use a slightly longer delay
     timeoutRef.current = setTimeout(() => {
       setAnchorEl(null);
-    }, 300); // Small delay to prevent menu from closing immediately when moving to submenu
+    }, 50); // Small delay to prevent menu from closing immediately when moving to submenu
   };
 
   const open = Boolean(anchorEl);
@@ -150,6 +151,7 @@ const SidebarCollapsedMenuItem = ({
               routes={routes.subPath}
               onItemClick={handleClick}
               onClose={handlePopoverClose}
+              level={0}
             />
           </Box>
         )}
