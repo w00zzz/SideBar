@@ -1,4 +1,4 @@
-import PopoverItem from "./PopoverItem";
+import PopoverItem from "./SidebarCollapsedMenuItem";
 import { IPWARoutes } from "faster-router";
 
 interface PopoverProps {

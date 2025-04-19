@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
-import Popover from "./Popover/Popover";
-import TreeView from "../TreeView";
+import Popover from "./SidebarCollapsedMenu/SidebarCollapsedMenu";
+import TreeView from "./SidebarExpandedMenu/TreeView";
 import { IPWARoutes } from "faster-router";
 
 interface SidebarContentProps {
