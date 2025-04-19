@@ -129,9 +129,9 @@ const PopoverItem = ({ handleClick, icon: Icon, routes, title }: PopoverItemProp
 
   return (
     <Box sx={{ padding: 0 }}>
-      <Tooltip title={title || ""} placement="right">
         <ListItemButton
           onClick={handlePopoverOpen}
+          
           sx={{
             width: 65,
             height: 65,
@@ -172,7 +172,7 @@ const PopoverItem = ({ handleClick, icon: Icon, routes, title }: PopoverItemProp
             />
           )}
         </ListItemButton>
-      </Tooltip>
+      {/* </Tooltip> */}
 
       <Popover
         open={open}
