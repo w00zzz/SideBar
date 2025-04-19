@@ -19,14 +19,13 @@ const SidebarToggle = ({
       padding: 0,
       minWidth: "24px",
       backgroundColor: "#fff",
-      boxShadow: "0px 2px 4px rgba(0,0,0,0.1)",
       border: "1px solid rgba(145, 158, 171, 0.3)",
       borderRadius: "50%",
       transition: "left 0.4s ease-in-out",
       zIndex: 1300,
       "&:hover": {
         backgroundColor: "#f5f5f5",
-        boxShadow: "0px 4px 8px rgba(0,0,0,0.1)",
+        boxShadow: "0px 4px 8px rgba(0, 0, 0, 0)",
       },
     }}
   >

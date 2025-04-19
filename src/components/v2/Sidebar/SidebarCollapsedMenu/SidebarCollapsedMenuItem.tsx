@@ -53,7 +53,6 @@ const SubMenu: FC<SubMenuProps> = ({ routes, onItemClick, onClose }) => {
                 "&:hover": {
                   backgroundColor: "#f5f5f5",
                 },
-                boxShadow: "0 2px 4px rgba(0,0,0,0.05)",
                 color: "#637381",
                 fontSize: "14px",
                 fontWeight: 500,
@@ -87,7 +86,6 @@ const SubMenu: FC<SubMenuProps> = ({ routes, onItemClick, onClose }) => {
                 sx={{
                   '.MuiPopover-paper': {
                     borderRadius: '8px',
-                    boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
                     marginLeft: '8px',
                   }
                 }}
@@ -151,7 +149,6 @@ const PopoverItem = ({ handleClick, icon: Icon, routes, title }: PopoverItemProp
               backgroundColor: "#f5f5f5",
               transform: "scale(1)",
             },
-            boxShadow: "0 2px 4px rgba(0,0,0,0.05)",
             position: 'relative',
           }}
         >
@@ -192,7 +189,6 @@ const PopoverItem = ({ handleClick, icon: Icon, routes, title }: PopoverItemProp
         sx={{
           '.MuiPopover-paper': {
             borderRadius: '8px',
-            boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
             marginLeft: '8px',
           }
         }}
