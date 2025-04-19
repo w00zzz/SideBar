@@ -1,4 +1,4 @@
-import { FC, useState, MouseEvent } from "react";
+import { FC, useState, MouseEvent, useRef } from "react";
 import {
   Box,
   ListItemButton,
@@ -17,16 +17,23 @@ const SubMenu: FC<SubMenuProps> = ({
 }) => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [activeSubPath, setActiveSubPath] = useState<string | null>(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleSubMenuOpen = (event: MouseEvent<HTMLElement>, key: string) => {
     event.stopPropagation();
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
     setAnchorEl(event.currentTarget);
     setActiveSubPath(key);
   };
 
   const handleSubMenuClose = () => {
-    setAnchorEl(null);
-    setActiveSubPath(null);
+    timeoutRef.current = setTimeout(() => {
+      setAnchorEl(null);
+      setActiveSubPath(null);
+    }, 1); // Small delay to prevent menu from closing immediately when moving to submenu
   };
 
   return (
@@ -62,6 +69,12 @@ const SubMenu: FC<SubMenuProps> = ({
                     onClose();
                   }
                 }}
+                onMouseEnter={(e) => {
+                  if (route.subPath) {
+                    handleSubMenuOpen(e, key);
+                  }
+                }}
+                onMouseLeave={handleSubMenuClose}
                 sx={{
                   width: "auto",
                   minWidth: "120px",
@@ -99,6 +112,13 @@ const SubMenu: FC<SubMenuProps> = ({
                   open={Boolean(anchorEl)}
                   anchorEl={anchorEl}
                   onClose={handleSubMenuClose}
+                  onMouseEnter={() => {
+                    if (timeoutRef.current) {
+                      clearTimeout(timeoutRef.current);
+                      timeoutRef.current = null;
+                    }
+                  }}
+                  onMouseLeave={handleSubMenuClose}
                   anchorOrigin={{
                     vertical: "top",
                     horizontal: "right",

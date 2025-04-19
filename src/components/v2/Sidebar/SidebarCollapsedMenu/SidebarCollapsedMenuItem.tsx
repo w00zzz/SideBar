@@ -1,4 +1,4 @@
-import { useState, MouseEvent } from "react";
+import { useState, MouseEvent, useRef } from "react";
 import {
   Box,
   ListItemButton,
@@ -18,22 +18,31 @@ const SidebarCollapsedMenuItem = ({
   title,
 }: PopoverItemProps) => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const handlePopoverOpen = (event: MouseEvent<HTMLElement>) => {
     event.stopPropagation();
     if (routes?.subPath) {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current = null;
+      }
       setAnchorEl(event.currentTarget);
     }
   };
 
   const handlePopoverClose = () => {
-    setAnchorEl(null);
+    timeoutRef.current = setTimeout(() => {
+      setAnchorEl(null);
+    }, 300); // Small delay to prevent menu from closing immediately when moving to submenu
   };
 
   const open = Boolean(anchorEl);
 
   const listItemButtonProps = {
     onClick: handlePopoverOpen,
+    onMouseEnter: handlePopoverOpen,
+    onMouseLeave: handlePopoverClose,
     sx: {
       width: 65,
       height: 65,
@@ -97,6 +106,13 @@ const SidebarCollapsedMenuItem = ({
         open={open}
         anchorEl={anchorEl}
         onClose={handlePopoverClose}
+        onMouseEnter={() => {
+          if (timeoutRef.current) {
+            clearTimeout(timeoutRef.current);
+            timeoutRef.current = null;
+          }
+        }}
+        onMouseLeave={handlePopoverClose}
         anchorOrigin={{
           vertical: "center",
           horizontal: "right",
