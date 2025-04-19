@@ -35,7 +35,7 @@ const SubMenu: FC<SubMenuProps> = ({
     timeoutRef.current = setTimeout(() => {
       setAnchorEl(null);
       setActiveSubPath(null);
-    }, 100); // Small delay to prevent menu from closing immediately when moving to submenu
+    }, 10); // Small delay to prevent menu from closing immediately when moving to submenu
   };
 
   return (
