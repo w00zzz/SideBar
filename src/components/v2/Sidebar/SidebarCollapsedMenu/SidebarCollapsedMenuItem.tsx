@@ -127,52 +127,69 @@ const PopoverItem = ({ handleClick, icon: Icon, routes, title }: PopoverItemProp
 
   const open = Boolean(anchorEl);
 
+  // Common ListItemButton properties
+  const listItemButtonProps = {
+    onClick: handlePopoverOpen,
+    sx: {
+      width: 65,
+      height: 65,
+      minWidth: 65,
+      minHeight: 65,
+      borderRadius: "8px",
+      backgroundColor: "#ffffff",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      padding: 0,
+      margin: 0,
+      transition: "all 0.2s ease-in-out",
+      "&:hover": {
+        backgroundColor: "#f5f5f5",
+        transform: "scale(1)",
+      },
+      position: 'relative',
+    }
+  };
+
+  // Common ListItemButton content
+  const listItemContent = (
+    <>
+      <Icon
+        sx={{
+          fontSize: 23,
+          color: "#637381",
+        }}
+      />
+      {routes?.subPath && (
+        <ChevronRightIcon
+          sx={{
+            position: 'absolute',
+            right: -8,
+            top: '50%',
+            transform: 'translateY(-50%)',
+            fontSize: 16,
+            color: '#637381',
+            opacity: 0.7,
+          }}
+        />
+      )}
+    </>
+  );
+
   return (
     <Box sx={{ padding: 0 }}>
-        <ListItemButton
-          onClick={handlePopoverOpen}
-          
-          sx={{
-            width: 65,
-            height: 65,
-            minWidth: 65,
-            minHeight: 65,
-            borderRadius: "8px",
-            backgroundColor: "#ffffff",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            padding: 0,
-            margin: 0,
-            transition: "all 0.2s ease-in-out",
-            "&:hover": {
-              backgroundColor: "#f5f5f5",
-              transform: "scale(1)",
-            },
-            position: 'relative',
-          }}
-        >
-          <Icon
-            sx={{
-              fontSize: 23,
-              color: "#637381",
-            }}
-          />
-          {routes?.subPath && (
-            <ChevronRightIcon
-              sx={{
-                position: 'absolute',
-                right: -8,
-                top: '50%',
-                transform: 'translateY(-50%)',
-                fontSize: 16,
-                color: '#637381',
-                opacity: 0.7,
-              }}
-            />
-          )}
+      {/* Only show tooltip for items without subPath */}
+      {routes?.subPath ? (
+        <ListItemButton {...listItemButtonProps}>
+          {listItemContent}
         </ListItemButton>
-      {/* </Tooltip> */}
+      ) : (
+        <Tooltip title={title || ""} placement="right">
+          <ListItemButton {...listItemButtonProps}>
+            {listItemContent}
+          </ListItemButton>
+        </Tooltip>
+      )}
 
       <Popover
         open={open}
