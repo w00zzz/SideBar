@@ -1,138 +1,22 @@
-import { FC, useState, MouseEvent } from 'react';
-import { Box, ListItemButton, Tooltip, Popover, ListSubheader, Divider } from "@mui/material";
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import { IPWARoutes } from 'faster-router';
+import { useState, MouseEvent } from "react";
+import {
+  Box,
+  ListItemButton,
+  Tooltip,
+  Popover,
+  ListSubheader,
+  Divider,
+} from "@mui/material";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import { PopoverItemProps } from "@/interfaces/components/Sidebar/Sidebar.types";
+import SubMenu from "./SubMenu";
 
-interface SubMenuProps {
-  routes: any;
-  onItemClick: () => void;
-  onClose: () => void;
-  parentTitle?: string;
-}
-
-const SubMenu: FC<SubMenuProps> = ({ routes, onItemClick, onClose, parentTitle }) => {
-  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
-  const [activeSubPath, setActiveSubPath] = useState<string | null>(null);
-
-  const handleSubMenuOpen = (event: MouseEvent<HTMLElement>, key: string) => {
-    event.stopPropagation();
-    setAnchorEl(event.currentTarget);
-    setActiveSubPath(key);
-  };
-
-  const handleSubMenuClose = () => {
-    setAnchorEl(null);
-    setActiveSubPath(null);
-  };
-
-  return (
-    <Box sx={{ p: 1, display: 'flex', flexDirection: 'column', gap: 1 }}>
-      {/* Mostrar el título del padre como encabezado si está presente */}
-      {parentTitle && (
-        <>
-          <ListSubheader
-            sx={{
-              backgroundColor: 'transparent',
-              color: '#9DA4AE',
-              fontWeight: 500,
-              fontSize: '14px',
-              padding: '8px 16px',
-              lineHeight: '24px',
-              userSelect: 'none',
-            }}
-          >
-            {parentTitle}
-          </ListSubheader>
-          <Divider sx={{ my: 0.5 }} />
-        </>
-      )}
-      {Object.entries(routes).map(([key, route]: [string, any]) => (
-        route.title && (
-          <Box key={key} sx={{ position: 'relative' }}>
-            <ListItemButton
-              onClick={(e) => {
-                if (route.subPath) {
-                  handleSubMenuOpen(e, key);
-                } else {
-                  onItemClick();
-                  onClose();
-                }
-              }}
-              sx={{
-                width: 'auto',
-                minWidth: '120px',
-                height: '40px',
-                borderRadius: "8px",
-                backgroundColor: "#ffffff",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                padding: '0 16px',
-                margin: 0,
-                transition: "all 0.2s ease-in-out",
-                "&:hover": {
-                  backgroundColor: "#f5f5f5",
-                },
-                color: "#637381",
-                fontSize: "14px",
-                fontWeight: 500,
-              }}
-            >
-              <span>{route.title}</span>
-              {route.subPath && (
-                <ChevronRightIcon
-                  sx={{
-                    fontSize: 16,
-                    opacity: 0.7,
-                    ml: 1
-                  }}
-                />
-              )}
-            </ListItemButton>
-
-            {route.subPath && activeSubPath === key && (
-              <Popover
-                open={Boolean(anchorEl)}
-                anchorEl={anchorEl}
-                onClose={handleSubMenuClose}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'left',
-                }}
-                sx={{
-                  '.MuiPopover-paper': {
-                    borderRadius: '8px',
-                    marginLeft: '8px',
-                  }
-                }}
-              >
-                <SubMenu
-                  routes={route.subPath}
-                  onItemClick={onItemClick}
-                  onClose={onClose}
-                  parentTitle={route.title}
-                />
-              </Popover>
-            )}
-          </Box>
-        )
-      ))}
-    </Box>
-  );
-};
-
-interface PopoverItemProps {
-  handleClick: () => void;
-  icon: FC<any>;
-  routes?: IPWARoutes;
-  title?: string;
-}
-
-const PopoverItem = ({ handleClick, icon: Icon, routes, title }: PopoverItemProps) => {
+const SidebarCollapsedMenuItem = ({
+  handleClick,
+  icon: Icon,
+  routes,
+  title,
+}: PopoverItemProps) => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
   const handlePopoverOpen = (event: MouseEvent<HTMLElement>) => {
@@ -148,7 +32,6 @@ const PopoverItem = ({ handleClick, icon: Icon, routes, title }: PopoverItemProp
 
   const open = Boolean(anchorEl);
 
-  // Common ListItemButton properties
   const listItemButtonProps = {
     onClick: handlePopoverOpen,
     sx: {
@@ -168,11 +51,10 @@ const PopoverItem = ({ handleClick, icon: Icon, routes, title }: PopoverItemProp
         backgroundColor: "#f5f5f5",
         transform: "scale(1)",
       },
-      position: 'relative',
-    }
+      position: "relative",
+    },
   };
 
-  // Common ListItemButton content
   const listItemContent = (
     <>
       <Icon
@@ -184,12 +66,12 @@ const PopoverItem = ({ handleClick, icon: Icon, routes, title }: PopoverItemProp
       {routes?.subPath && (
         <ChevronRightIcon
           sx={{
-            position: 'absolute',
+            position: "absolute",
             right: -8,
-            top: '50%',
-            transform: 'translateY(-50%)',
+            top: "50%",
+            transform: "translateY(-50%)",
             fontSize: 16,
-            color: '#637381',
+            color: "#637381",
             opacity: 0.7,
           }}
         />
@@ -199,7 +81,6 @@ const PopoverItem = ({ handleClick, icon: Icon, routes, title }: PopoverItemProp
 
   return (
     <Box sx={{ padding: 0 }}>
-      {/* Only show tooltip for items without subPath */}
       {routes?.subPath ? (
         <ListItemButton {...listItemButtonProps}>
           {listItemContent}
@@ -217,41 +98,38 @@ const PopoverItem = ({ handleClick, icon: Icon, routes, title }: PopoverItemProp
         anchorEl={anchorEl}
         onClose={handlePopoverClose}
         anchorOrigin={{
-          vertical: 'center',
-          horizontal: 'right',
+          vertical: "center",
+          horizontal: "right",
         }}
         transformOrigin={{
-          vertical: 'center',
-          horizontal: 'left',
+          vertical: "center",
+          horizontal: "left",
         }}
         sx={{
-          '.MuiPopover-paper': {
-            borderRadius: '8px',
-            marginLeft: '8px',
-          }
+          ".MuiPopover-paper": {
+            borderRadius: "8px",
+            marginLeft: "8px",
+          },
         }}
       >
         {routes?.subPath && (
-          <Box sx={{ width: '100%' }}>
-            {/* Parent title header */}
+          <Box sx={{ width: "100%" }}>
             <ListSubheader
               sx={{
-                backgroundColor: 'transparent',
-                color: '#9DA4AE',  // Lighter gray to indicate non-clickable
+                backgroundColor: "transparent",
+                color: "#9DA4AE",
                 fontWeight: 500,
-                fontSize: '14px',
-                padding: '8px 16px',
-                lineHeight: '24px',
-                userSelect: 'none',
+                fontSize: "14px",
+                padding: "8px 16px",
+                lineHeight: "24px",
+                userSelect: "none",
               }}
             >
               {title || ""}
             </ListSubheader>
-            
-            {/* Divider */}
+
             <Divider sx={{ my: 0.5 }} />
-            
-            {/* Submenu items */}
+
             <SubMenu
               routes={routes.subPath}
               onItemClick={handleClick}
@@ -264,4 +142,4 @@ const PopoverItem = ({ handleClick, icon: Icon, routes, title }: PopoverItemProp
   );
 };
 
-export default PopoverItem;
+export default SidebarCollapsedMenuItem;

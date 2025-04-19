@@ -1,12 +1,7 @@
-import PopoverItem from "./SidebarCollapsedMenuItem";
-import { IPWARoutes } from "faster-router";
+import { PopoverProps } from "@/interfaces/components/Sidebar/Sidebar.types";
+import SidebarCollapsedMenuItem from "./SidebarCollapsedMenuItem";
 
-interface PopoverProps {
-  routes: IPWARoutes
-}
-
-// Componente Popover que muestra un único botón de Home estilizado
-const Popover = ({routes}: PopoverProps) => {
+const SidebarCollapsedMenu = ({ routes }: PopoverProps) => {
   return (
     <>
       {Object.entries(routes)
@@ -16,7 +11,7 @@ const Popover = ({routes}: PopoverProps) => {
         })
         .map(([key, route]) => {
           return (
-            <PopoverItem
+            <SidebarCollapsedMenuItem
               key={key}
               handleClick={() => console.log(`click en ${route.title}`)}
               icon={route.icon}
@@ -24,10 +19,9 @@ const Popover = ({routes}: PopoverProps) => {
               title={route.title}
             />
           );
-        })
-      }
+        })}
     </>
   );
 };
 
-export default Popover;
+export default SidebarCollapsedMenu;
