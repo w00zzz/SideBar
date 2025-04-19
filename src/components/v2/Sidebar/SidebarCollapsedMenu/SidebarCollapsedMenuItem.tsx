@@ -1,5 +1,5 @@
 import { FC, useState, MouseEvent } from 'react';
-import { Box, ListItemButton, Tooltip, Popover } from "@mui/material";
+import { Box, ListItemButton, Tooltip, Popover, ListSubheader, Divider } from "@mui/material";
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { IPWARoutes } from 'faster-router';
 
@@ -211,11 +211,32 @@ const PopoverItem = ({ handleClick, icon: Icon, routes, title }: PopoverItemProp
         }}
       >
         {routes?.subPath && (
-          <SubMenu
-            routes={routes.subPath}
-            onItemClick={handleClick}
-            onClose={handlePopoverClose}
-          />
+          <Box sx={{ width: '100%' }}>
+            {/* Parent title header */}
+            <ListSubheader
+              sx={{
+                backgroundColor: 'transparent',
+                color: '#9DA4AE',  // Lighter gray to indicate non-clickable
+                fontWeight: 500,
+                fontSize: '14px',
+                padding: '8px 16px',
+                lineHeight: '24px',
+                userSelect: 'none',
+              }}
+            >
+              {title || ""}
+            </ListSubheader>
+            
+            {/* Divider */}
+            <Divider sx={{ my: 0.5 }} />
+            
+            {/* Submenu items */}
+            <SubMenu
+              routes={routes.subPath}
+              onItemClick={handleClick}
+              onClose={handlePopoverClose}
+            />
+          </Box>
         )}
       </Popover>
     </Box>
