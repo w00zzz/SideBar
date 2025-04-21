@@ -334,7 +334,7 @@ function App() {
           {/* <Drawer routes={myRoutes2}></Drawer> */}
           {/* <TreeViewPopover/> */}
           <div style={{ backgroundColor: "red" }}>{children}</div>
-          <Sidebar routes={myRoutes2}/>
+          <Sidebar routes={myRoutes2} title="titulo del sidebar" logoPath="src/assets/logo.png"/>
         </div>
       )}
       LandingPage={() => <h1>Landing!</h1>}

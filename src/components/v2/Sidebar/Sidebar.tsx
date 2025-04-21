@@ -6,10 +6,13 @@ import SidebarContent from "./SidebarContent";
 import { IPWARoutes } from "faster-router";
 
 interface SidebarProps {
-  routes: IPWARoutes
+  routes: IPWARoutes;
+  title?: string;
+  logoPath?: string;
+
 }
 
-const SideBar = ({routes}: SidebarProps) => {
+const SideBar = ({routes, title, logoPath}: SidebarProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const drawerWidth = isExpanded ? 300 : 87;
 
@@ -24,14 +27,13 @@ const SideBar = ({routes}: SidebarProps) => {
             width: drawerWidth,
             overflowX: "hidden",
             backgroundColor: "#fff",
-            transition: "width 0.4s ease-in-out",
             borderRight: "1px solid rgba(145, 158, 171, 0.2)",
           },
           position: "relative",
         }}
       >
-        <SidebarHeader isExpanded={isExpanded} />
-        <SidebarContent isExpanded={isExpanded} routes={routes} />
+        <SidebarHeader isExpanded={isExpanded} logoPath={logoPath} />
+        <SidebarContent isExpanded={isExpanded} routes={routes} title={title}/>
         <SidebarToggle
           isExpanded={isExpanded}
           onClick={() => setIsExpanded(!isExpanded)}

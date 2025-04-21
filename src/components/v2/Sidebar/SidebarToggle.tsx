@@ -21,7 +21,6 @@ const SidebarToggle = ({
       backgroundColor: "#fff",
       border: "1px solid rgba(145, 158, 171, 0.3)",
       borderRadius: "50%",
-      transition: "left 0.4s ease-in-out",
       zIndex: 1300,
       "&:hover": {
         backgroundColor: "#f5f5f5",

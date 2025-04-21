@@ -1,47 +1,31 @@
 import { Box } from "@mui/material";
-import Popover from "./SidebarCollapsedMenu/SidebarCollapsedMenu";
-import TreeView from "./SidebarExpandedMenu/TreeView";
 import { IPWARoutes } from "faster-router";
+import SidebarMenu from "./SidebarMenu";
 
 interface SidebarContentProps {
   isExpanded: boolean;
   routes: IPWARoutes;
+  title?: string;
 }
 
-const SidebarContent = ({ isExpanded, routes }: SidebarContentProps) => {
-  // Contenido dinámico basado en `isExpanded`
-  const content = isExpanded ? (
-    <>
-      <h1 style={{ textAlign: "center", margin: 0 }}>Expanded Content</h1>
-      {/* Pasamos el objeto `data` al componente TreeView */}
-      {/* <TreeView data={data} /> */}
-      <TreeView />
-    </>
-  ) : (
-    <>
-      {/* Pasamos el objeto `data` al componente Popover */}
-      {/* <Popover data={data} /> */}
-      <Popover routes={routes} />
-    </>
-  );
-
+const SidebarContent = ({ isExpanded, routes, title }: SidebarContentProps) => {
   return (
     <Box
       sx={{
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        gap: 1, // Espaciado entre elementos
+        gap: 1,
         overflowY: "auto",
         flex: 1,
         maxHeight: "calc(100vh - 64px)",
         "&::-webkit-scrollbar": {
-          width: "1px", // Scrollbar minimalista
+          width: "1px",
         },
-        transition: "all 0.3s ease-in-out", // Animación suave
+        transition: "all 0.3s ease-in-out",
       }}
     >
-      {content}
+      <SidebarMenu routes={routes} isExpanded={isExpanded} title={title}/>
     </Box>
   );
 };
