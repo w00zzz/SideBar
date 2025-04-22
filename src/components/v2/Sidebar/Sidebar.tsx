@@ -12,9 +12,27 @@ interface SidebarProps {
 
 }
 
+
+const calcDrawerWidth = (routes: IPWARoutes) => {
+
+  let titleLength: number = 0;
+  
+  Object.entries(routes)
+    .filter(([, { title }]) => title)
+    .map(([key, { title }]) => {
+      const tempTitleLength: number = title?.length ?? 0;
+      titleLength = (tempTitleLength > titleLength) ? tempTitleLength : titleLength;
+    });
+
+  return titleLength;
+}
+
+
+
 const SideBar = ({routes, title, logoPath}: SidebarProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const drawerWidth = isExpanded ? 300 : 87;
+  console.log(calcDrawerWidth(routes));
+  const drawerWidth = isExpanded ? 500 : 87;
 
   return (
     <Box sx={{ display: "flex" }}>

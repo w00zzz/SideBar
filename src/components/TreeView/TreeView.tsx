@@ -5,8 +5,6 @@ import {
   ListItemIcon,
   ListItemText,
   Stack,
-  Menu,
-  MenuItem,
 } from "@mui/material";
 import { useTreeViewLogic } from "@/hooks/TreeView/TreeView.logic";
 import { useNavigate } from "react-router-dom";
@@ -14,43 +12,18 @@ import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import TreeViewProps from "@/interfaces/components/TreeView/TreeView.types";
 import React, { useState } from "react";
 
-const TreeView: React.FC<TreeViewProps> = ({ routes, parent = "", level = 0, isCollapsed = false }) => {
+const TreeView: React.FC<TreeViewProps> = ({
+  routes,
+  parent = "",
+  level = 0,
+  isCollapsed = false,
+}) => {
   const { open, handleClick } = useTreeViewLogic();
   const navigate = useNavigate();
   const hasParent = Boolean(parent);
-  const marginLeft = hasParent && level === 0 ? 4 : 2;
+  const marginLeft = hasParent && level === 0 ? 8 : 2;
 
-  // Estado para controlar el modo expandido/colapsado
   const [expandedMode] = useState(true);
-
-  // Estados para los menús emergentes
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [hoveredItem, setHoveredItem] = useState<string | null>(null);
-
-  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>, key: string) => {
-    setAnchorEl(event.currentTarget);
-    setHoveredItem(key);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-    setHoveredItem(null);
-  };
-
-  // Estilos reutilizables
-  const listItemButtonStyles = (isOpen: boolean) => ({
-    ml: marginLeft,
-    position: "relative",
-    zIndex: 1,
-    backgroundColor: isOpen ? "#f0f4f8" : "#fff",
-    borderRadius: "8px",
-    mb: 0.5,
-    py: 0.5,
-    transition: "background-color 0.2s",
-    "&:hover": {
-      backgroundColor: isOpen ? "#e3eaf2" : "#f8f9fa",
-    },
-  });
 
   const listItemTextStyles = {
     m: 0,
@@ -62,13 +35,31 @@ const TreeView: React.FC<TreeViewProps> = ({ routes, parent = "", level = 0, isC
   };
 
   return (
-    <Stack component="nav" sx={{ color: "text.secondary", p: 2, pr: hasParent ? 0 : 2 }}>
-      <ul style={{ position: "relative", listStyle: "none", margin: 0, padding: 0 }}>
+    <Stack
+      component="nav"
+      sx={{
+        color: "text.secondary",
+        p: 2,
+        pr: hasParent ? 0 : 2,
+        pl: hasParent ? 2 : 0,
+        pt: "8px",
+        pb: "8px",
+      }}
+    >
+      <ul
+        style={{
+          position: "relative",
+          listStyle: "none",
+          margin: 0,
+          padding: 0,
+        }}
+      >
         {Object.entries(routes)
           .filter(([, { title }]) => title)
           .map(([key, { subPath, path, title, icon: Icon }], index, array) => {
             const fullPath = `${parent}${path}`;
             const last = index === array.length - 1;
+            const first = index === 0;
             const isOpen = open[title as keyof typeof open];
 
             const handleItemClick = () => {
@@ -81,12 +72,13 @@ const TreeView: React.FC<TreeViewProps> = ({ routes, parent = "", level = 0, isC
 
             return (
               <li key={key} style={{ position: "relative" }}>
-                {/* Línea vertical para niveles anidados */}
                 {level > 0 && !last && (
                   <Box
                     sx={{
                       position: "absolute",
-                      left: `${marginLeft * 6}px`,
+                      // left: `${marginLeft * 6}px`,
+                      left: hasParent ? "0px" : "10px",
+
                       top: 0,
                       bottom: 0,
                       borderLeft: "2px solid gray",
@@ -94,40 +86,50 @@ const TreeView: React.FC<TreeViewProps> = ({ routes, parent = "", level = 0, isC
                     }}
                   />
                 )}
-                {/* Botón de lista */}
                 <ListItemButton
                   onClick={handleItemClick}
-                  sx={listItemButtonStyles(!!subPath && isOpen)}
+                  sx={{
+                    ml: hasParent ? marginLeft : "10px",
+                    position: "relative",
+                    zIndex: 1,
+                    backgroundColor: isOpen ? "#f0f4f8 !important" : "",
+
+                    borderRadius: "8px",
+                    mb: 0.5,
+                    py: 0.5,
+                    transition: "background-color 0.2s",
+                    "&:hover": {
+                      backgroundColor: isOpen ? "#e3eaf2" : "#f8f9fa",
+                    },
+                  }}
                 >
-                  {/* Conector curvo */}
                   {hasParent && (
                     <Box
                       sx={{
                         borderLeft: "2px solid gray",
-                        borderBottomLeftRadius: "10px",
+                        left: "9px",
+                        borderBottomLeftRadius: "10px ",
                         borderBottom: "2px solid gray",
                         width: "16px",
-                        height: "90%",
-                        transform: last ? "translate(-125%, -50%)" : "translate(-124%, -50%)",
+                        height: first ? "30px" : "120%",
+                        transform: "translate(-155%, -50%)",
                         position: "absolute",
                       }}
                     />
                   )}
-                  {/* Icono */}
                   {Icon && (
                     <ListItemIcon sx={{ minWidth: "35px" }}>
                       <Icon />
                     </ListItemIcon>
                   )}
-                  {/* Texto */}
                   {!isCollapsed && expandedMode && (
                     <ListItemText primary={title} sx={listItemTextStyles} />
                   )}
-                  {/* Flecha de expansión */}
-                  {subPath && expandedMode && (isOpen ? <ExpandLess /> : <ExpandMore />)}
+                  {subPath &&
+                    expandedMode &&
+                    (isOpen ? <ExpandLess /> : <ExpandMore />)}
                 </ListItemButton>
 
-                {/* Subrutas */}
                 {subPath && expandedMode && (
                   <Collapse
                     in={isOpen}
@@ -153,48 +155,6 @@ const TreeView: React.FC<TreeViewProps> = ({ routes, parent = "", level = 0, isC
                       isCollapsed={isCollapsed}
                     />
                   </Collapse>
-                )}
-
-                {/* Menú emergente en modo colapsado */}
-                {subPath && !expandedMode && (
-                  <>
-                    <ListItemButton
-                      onMouseEnter={(e) => handleMenuOpen(e, key)}
-                      onMouseLeave={handleMenuClose}
-                    >
-                      {Icon && (
-                        <ListItemIcon sx={{ minWidth: "35px" }}>
-                          <Icon />
-                        </ListItemIcon>
-                      )}
-                    </ListItemButton>
-                    <Menu
-                      anchorEl={anchorEl}
-                      open={Boolean(anchorEl) && hoveredItem === key}
-                      onClose={handleMenuClose}
-                      anchorOrigin={{
-                        vertical: "top",
-                        horizontal: "right",
-                      }}
-                      transformOrigin={{
-                        vertical: "top",
-                        horizontal: "left",
-                      }}
-                    >
-                      {Object.entries(subPath).map(([subKey, { path: subPath, title }]) => (
-                        <MenuItem
-                          key={subKey}
-                          onClick={() => {
-                            navigate(`${fullPath}/${subPath}`);
-                            handleMenuClose();
-                          }}
-                          onMouseEnter={(e) => handleMenuOpen(e, subKey)}
-                        >
-                          {title}
-                        </MenuItem>
-                      ))}
-                    </Menu>
-                  </>
                 )}
               </li>
             );
