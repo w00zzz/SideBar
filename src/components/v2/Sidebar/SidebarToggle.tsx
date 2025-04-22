@@ -4,16 +4,18 @@ import { IconButton } from "@mui/material";
 const SidebarToggle = ({
   isExpanded,
   onClick,
+  drawerWidth,
 }: {
   isExpanded: boolean;
   onClick: () => void;
+  drawerWidth: number;
 }) => (
   <IconButton // Icono para expandir y collapsar el drawer
     onClick={onClick}
     sx={{
       position: "fixed",
       top: "21px",
-      left: isExpanded ? "288px" : "75px",
+      left: isExpanded ? drawerWidth - 12.5 : "75px",
       width: "24px",
       height: "24px",
       padding: 0,
