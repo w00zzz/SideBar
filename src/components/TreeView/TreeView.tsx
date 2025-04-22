@@ -77,7 +77,7 @@ const TreeView: React.FC<TreeViewProps> = ({
                     sx={{
                       position: "absolute",
                       // left: `${marginLeft * 6}px`,
-                      left: hasParent ? "0px" : "10px",
+                      left: hasParent ? "0.3px" : "10px",
 
                       top: 0,
                       bottom: 0,
@@ -101,6 +101,7 @@ const TreeView: React.FC<TreeViewProps> = ({
                     "&:hover": {
                       backgroundColor: isOpen ? "#e3eaf2" : "#f8f9fa",
                     },
+                    
                   }}
                 >
                   {hasParent && (
